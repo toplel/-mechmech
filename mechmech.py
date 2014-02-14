@@ -17,7 +17,7 @@ def answer(x):
     return ret
 
 if __name__ == "__main__":
-    currentNick = "mechmech"
+    currentNick = botconfig.nickList[0]
     sox = socket.socket()
     sox.connect((botconfig.host, botconfig.port))
     try:
@@ -27,7 +27,7 @@ if __name__ == "__main__":
         ping = str(sox.recv(botconfig.buffer_size), botconfig.charset)
         sox.send(bytes("PONG" + ping[4:len(ping)] + "\n", botconfig.charset))
         sox.send(bytes("JOIN " + botconfig.channel + "\n", botconfig.charset))
-        botskills.initializeShellCommands()
+        botSkills.initializeShellCommands()
         while True:
             incoming = str(sox.recv(botconfig.buffer_size), botconfig.charset)
             outgoing = answer(incoming)
