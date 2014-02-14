@@ -17,18 +17,19 @@ def answer(x):
     return ret
 
 if __name__ == "__main__":
-    currentNick = "MechaBot2"
+    currentNick = "mechmech"
     sox = socket.socket()
     sox.connect((botconfig.host, botconfig.port))
     try:
-        sox.recv(512)
+        sox.recv(botconfig.buffer_size)
         sox.send(bytes("USER mecha mecha mecha :Mechabot\n", botconfig.charset))
         sox.send(bytes("NICK " + currentNick + "\n", botconfig.charset))
-        ping = str(sox.recv(512), botconfig.charset)
+        ping = str(sox.recv(botconfig.buffer_size), botconfig.charset)
         sox.send(bytes("PONG" + ping[4:len(ping)] + "\n", botconfig.charset))
         sox.send(bytes("JOIN " + botconfig.channel + "\n", botconfig.charset))
+        botskills.initializeShellCommands()
         while True:
-            incoming = str(sox.recv(1024), botconfig.charset)
+            incoming = str(sox.recv(botconfig.buffer_size), botconfig.charset)
             outgoing = answer(incoming)
             for x in outgoing:
                 sox.send(bytes(x, botconfig.charset))

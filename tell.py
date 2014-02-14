@@ -3,6 +3,12 @@ import time
 
 database = []
 
+def initialize():
+    pass
+
+def saveDatabase():
+    pass
+
 def tell(nick, options):
     m = time.strftime("[%H:%M]") + " <" + nick + "> tell"
     for o in options:

@@ -3,6 +3,11 @@ import follow
 import tell
 import lastep
 
+def initializeShellCommands():
+    follow.initialize()
+    tell.initialize()
+    lastep.initialize()
+
 def shellInterpreter(x):
     nick = x[1:x.find("!")]
     x = x[x[1:].find(":") + 2:]
