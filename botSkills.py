@@ -19,6 +19,10 @@ def getNyaaSe(params):
         items.append(searchRes[itemStart:itemEnd])
         print(searchRes[itemStart:itemEnd])
         searchRes = searchRes[itemEnd:]
+
+def nyaaRSSItemParser(itemString):
+    pass
+    
     
 def nyaaCatsConvert(categoryName):
     return "0_0"
