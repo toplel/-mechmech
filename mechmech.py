@@ -4,7 +4,7 @@ import botSkills
 
 def answer(x):
     global currentNick
-    print (">>>" + x)
+    print (">>>" + x) #DEBUG
     if x[:4] == "PING":
         ret = ["PONG" + x[4:len(x)]]
     else:
@@ -13,7 +13,7 @@ def answer(x):
             rret = botSkills.shellInterpreter(x)
             for r in rret:
                 ret.append("PRIVMSG #2d :" + r + "\n")
-                print("<<<" + r)
+                print("<<<" + r) #DEBUG
     return ret
 
 if __name__ == "__main__":

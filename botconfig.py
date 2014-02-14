@@ -1,15 +1,9 @@
-#########################################
-#  note that this config file is just   #
-# a placeholder and might be incomplete #
-#     or outdated sometimes             #
-#########################################
-
-host = "irc.adress.goes.here"
+host = "irc.installgentoo.com"
 port = 6667
-charset = "utf-8"
 channel = "#channelName"
 
-#######
-#.tell#
-#######
+buffer_size = 1024
+
+charset = "utf-8"
+
 tell_timeout = 60 * 60 * 24 * 14
