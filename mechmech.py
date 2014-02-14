@@ -1,22 +1,23 @@
 import socket
 import botconfig
 import botSkills
+
 def answer(x):
     global currentNick
-    if x[:4] == "PING":
-        ret = "PONG" + x[4:len(x)]
-    else:
-        if ("PRIVMSG #2d :" in x) or ("PRIVMSG " + currentNick + " :" in x):
-            ret = botSkills.dealWithIt(x)
-            ret = "PRIVMSG " + botconfig.channel + " :" + ret + "\n"
-        else:
-            ret = ""
     print (">>>" + x)
-    print ("<<<" + ret)
+    if x[:4] == "PING":
+        ret = ["PONG" + x[4:len(x)]]
+    else:
+        ret = []
+        if ("PRIVMSG #2d :" in x) or ("PRIVMSG " + currentNick + " :" in x):
+            rret = botSkills.shellInterpreter(x)
+            for r in rret:
+                ret.append("PRIVMSG #2d :" + r + "\n")
+                print("<<<" + r)
     return ret
 
 if __name__ == "__main__":
-    currentNick = "MechaBot"
+    currentNick = "MechaBot2"
     sox = socket.socket()
     sox.connect((botconfig.host, botconfig.port))
     try:
@@ -29,8 +30,8 @@ if __name__ == "__main__":
         while True:
             incoming = str(sox.recv(1024), botconfig.charset)
             outgoing = answer(incoming)
-            if outgoing != "":
-                sox.send(bytes(outgoing, botconfig.charset))
+            for x in outgoing:
+                sox.send(bytes(x, botconfig.charset))
     except KeyboardInterrupt:
         sox.close()
         print("Exiting by KeyboardInterrupt (Ctrl+C).")

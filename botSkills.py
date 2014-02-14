@@ -1,29 +1,27 @@
 import botconfig
-import urllib.request as ureq
+import follow
+import tell
+import lastep
 
-def dealWithIt(x):
-    return "Dealing with it."
-
-def getNyaaSe(params):
-    reqUrl =  "http://www.nyaa.se/?page=rss&term=" + params["term"]
-    if "cats" in params:    reqUrl += "&cats=" + nyaaCatsConvert(params["cats"])
-    if "minage" in params:  reqUrl += "&minage=" + params["minage"]
-    if "maxage" in params:  reqUrl += "&maxage=" + params["maxage"]
-    if "minsize" in params: reqUrl += "&minsize=" + params["minsize"]
-    if "maxsize" in params: reqUrl += "&maxsize=" + params["maxsize"]
-    searchRes = str(ureq.urlopen(reqUrl).read(), botconfig.charset)
-    items = []
-    while "<item>" in searchRes:
-        itemStart = searchRes.find("<item>")
-        itemEnd = 7 + searchRes.find("</item>")
-        items.append(searchRes[itemStart:itemEnd])
-        print(searchRes[itemStart:itemEnd])
-        searchRes = searchRes[itemEnd:]
-
-def nyaaRSSItemParser(itemString):
-    pass
+def shellInterpreter(x):
+    nick = x[1:x.find("!")]
+    x = x[x[1:].find(":") + 2:]
+    message = x[:len(x)-2].split(" ")
+    y=[]
+    if message[0] == ".follow":
+        y = [(follow.follow(nick, message[1:len(message)]))]
+    elif message[0] == ".listfollow":
+        y = [(follow.listfollow(nick, message[1:len(message)]))]
+    elif message[0] == ".unfollow":
+        y = [(follow.unfollow(nick, message[1:len(message)]))]
+    elif message[0] == ".tell":
+        y = [(tell.tell(nick, message[1:len(message)]))]
+    elif message[0] == ".lastep":
+        y = [(lastep.lastep(nick, message[1:len(message)]))]
+    y = y + follow.userActivity(nick)
+    y = y + tell.userActivity(nick)
+    y = y + lastep.userActivity(nick)    
+    return y
     
     
-def nyaaCatsConvert(categoryName):
-    return "0_0"
     
