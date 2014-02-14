@@ -14,6 +14,7 @@ def tell(nick, options):
     for o in options:
         m += " " + o
     database.append([options[0], m, time.time()])
+    saveDatabase()
     return "I'll pass that on when " + options[0] + " is around, " + nick + "."
 
 def userActivity(nick):
@@ -26,4 +27,5 @@ def userActivity(nick):
             elif (time.time() - x[2]) > botconfig.tell_timeout:
                 database.remove(x)
         print(str(database))
+    saveDatabase()
     return m

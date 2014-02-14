@@ -9,7 +9,7 @@ def answer(x):
         ret = ["PONG" + x[4:len(x)]]
     else:
         ret = []
-        if ("PRIVMSG #2d :" in x) or ("PRIVMSG " + currentNick + " :" in x):
+        if ("PRIVMSG " + botconfig.channel + ":" in x) or ("PRIVMSG " + currentNick + " :" in x):
             rret = botSkills.shellInterpreter(x)
             for r in rret:
                 ret.append("PRIVMSG #2d :" + r + "\n")
