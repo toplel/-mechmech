@@ -15,14 +15,14 @@ def tell(nick, options):
         m += " " + o
     database.append([options[0], m, time.time()])
     saveDatabase()
-    return "I'll pass that on when " + options[0] + " is around, " + nick + "."
+    return [botconfig.channel, "I'll pass that on when " + options[0] + " is around, " + nick + "."]
 
 def userActivity(nick):
     m = []
     if not database == []:
         for x in database:
             if x[0] == nick:
-                m.append(x[1])
+                m.append([botconfig.channel,x[1]])
                 database.remove(x)
             elif (time.time() - x[2]) > botconfig.tell_timeout:
                 database.remove(x)

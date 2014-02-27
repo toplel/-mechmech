@@ -23,9 +23,13 @@ def shellInterpreter(x):
         y = [(tell.tell(nick, message[1:len(message)]))]
     elif message[0] == ".lastep":
         y = [(lastep.lastep(nick, message[1:len(message)]))]
+#    elif message[0] == ".addquote":
+#        y = [(quote.add(nick, message[1:len(message)]))]
+#    elif message[0] == ".quote":
+#        y = [(quote.quote(nick, message[1:len(message)]))]
     y = y + follow.userActivity(nick)
     y = y + tell.userActivity(nick)
-    y = y + lastep.userActivity(nick)    
+    y = y + lastep.userActivity(nick)
     return y
     
     
