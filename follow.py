@@ -6,10 +6,20 @@ import time
 database = []
 
 def initialize():
-    pass #PLACEHOLDER
+    try:
+        f = open(os.getcwd() + '/follow.database', 'rb')
+        database = pickle.load(f)
+        f.close()
+    except:
+        print("Could not load the database!!!")
 
 def saveDatabase():
-    pass #PLACEHOLDER
+    try:
+        f = open(os.getcwd() + '/follow.database', 'wb')
+        pickle.dump(database, f)
+        f.close()
+    except:
+        print("Could not save the database!!!")
 
 def follow(nick, options):
     database.append({'nick': nick,
