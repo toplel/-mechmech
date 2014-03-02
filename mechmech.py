@@ -29,10 +29,13 @@ if __name__ == '__main__':
         sox.send(bytes('JOIN ' + botconfig.channel + '\n', botconfig.charset))
         botSkills.initializeShellCommands()
         while True:
-            incoming = str(sox.recv(botconfig.buffer_size), botconfig.charset)
-            outgoing = answer(incoming)
-            for x in outgoing:
-                sox.send(bytes(x, botconfig.charset))
+            try:
+                incoming = str(sox.recv(botconfig.buffer_size), botconfig.charset)
+                outgoing = answer(incoming)
+                for x in outgoing:
+                    sox.send(bytes(x, botconfig.charset))
+            except:
+                pass
     except KeyboardInterrupt:
         sox.close()
         print('Exiting by KeyboardInterrupt (Ctrl+C).')

@@ -34,12 +34,16 @@ def getNyaaSe(params):
         reqUrl += '&filter=' + params['filter']
     else:
         reqUrl += '&filter=2'
-    searchRes = str(ureq.urlopen(reqUrl).read(), botconfig.charset)
+    try:
+        searchRes = str(ureq.urlopen(reqUrl).read(), botconfig.charset)
+    except:
+        searchRes = ""
     items = []
     while '<item>' in searchRes:
         itemStart = searchRes.find('<item>')
         itemEnd = 7 + searchRes.find('</item>')
-        items.append(nyaaRSSItemParser(searchRes[itemStart:itemEnd])) #CAUTION
+        candidate = nyaaRSSItemParser(searchRes[itemStart:itemEnd])
+        items.append(candidate)
         searchRes = searchRes[itemEnd:]
     return items
         
@@ -88,4 +92,26 @@ def nyaaRSSItemParser(itemString):
     
 def nyaaCatsConvert(categoryName):
     return '0_0'
+
+def lastep(params):
+    episodes = getNyaaSe(params)
+    lastNum = 0
+    lastRes = 0
+    lastEpisode = {}
+    for episode in episodes:
+        if episode['episode'] == lastNum:
+            if episode['resolution'] > lastRes:
+                lastRes = episode['resolution']
+                lastEpisode = episode
+        elif episode['episode'] > lastNum:
+                lastNum = episode['episode']
+                lastRes = episode['resolution']
+                lastEpisode = episode
+    return lastEpisode
+
+def parseNyaaCommands(options): #PLACEHOLDER
+    term = ''
+    for option in options:
+        term += option + ' '
+    return {'term': term.rstrip()}
     

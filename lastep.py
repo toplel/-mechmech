@@ -5,27 +5,11 @@ def initialize():
     pass
 
 def lastep(nick, options):
-    term = ''
-    for option in options:
-        term += option + ' '
-    episodes = nyaaSe.getNyaaSe({'term': term})
-    lastNum = 0
-    lastRes = 0
-    lastName = ''
-    lastLink = ''
-    for episode in episodes:
-        if episode['episode'] == lastNum:
-            if episode['resolution'] >= lastRes:
-                lastRes = episode['resolution']
-                lastLink = episode['link']
-        elif episode['episode'] > lastNum:
-                lastNum = episode['episode']
-                lastRes = episode['resolution']
-                lastLink = episode['link']
-    if not lastNum == 0:
-        response = nick + ': The last episode of "' + term.rstrip() + '" is ' + str(lastNum) + ': ' + lastLink
-    else:
+    episode = nyaaSe.lastep(nyaaSe.parseNyaaCommands(options))
+    if episode == {}:
         response = nick + ': No valid result found!'
+    else:
+        response = nick + ': The last episode of "' + nyaaSe.parseNyaaCommands(options)['term'] + '" is ' + str(episode['episode']) + ': ' + episode['link']
     return [botconfig.channel,response]
 
 def userActivity(nick):
