@@ -2,6 +2,8 @@ import urllib.request as ureq
 import botconfig
 import nyaaSe
 import time
+import os
+import pickle
 
 database = []
 
